@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DS Crystal Collector</title>
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Amita" rel="stylesheet">
+
+    <!-- adding jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+</head>
+<body>
+
+<div id = "wrapper">
+
+	<div class="Header">
+		<img src="https://cdn.wallpapersafari.com/94/21/PVAskG.jpg" alt="bonfire">
+		<h1><div class="centered">Crystal Collector</div></h1>
+	  </div>
+
+	<div id="instructions">
+		<span> You will be given a random number at the start of the game.
+		There are four crystals below. By clicking on a crystal you will add a specific amount of points to your total score.
+		You win the game by matching your total score to the random number. You lose the game if your total score goes above the random number.
+		Each time the game starts, the game will change the values of each crystal.</span>
+	</div>
+
+	<div class = "container">
+		<div id="guessingNumber">
+			<h2>Number to Guess: <br> <span class="value"></span></h2> 	
+		</div>
+
+		<div id="scoreboard">
+			 <!-- add image <h3><span id="status"></span></h3> -->
+			<h3>Wins: <span id="win"></span></h3>
+			<h3>Losses: <span id="loss"></span> </h3>
+		</div>
+	</div>
+
+	<div id="crystals"></div>
+
+	<div id ="totalScore">
+		<h2 id = "yts">Your Total Score is: <span id ="yourScore">0</span></h2>
+	</div>
+
+</div>
+
+
+ <!-- CSS -->
+
+
+
+<style>
+
+body {
+    background: url(https://i.pinimg.com/736x/c7/9f/9a/c79f9ab6a6c4d563798b11f392ff9cc9--crystal-caves-environment-concept.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+
+@font-face {
+        font-family: "OptimusPrinceps";
+        src: url('OptimusPrinceps.eot');
+        src: url('OptimusPrinceps.eot?#iefix') format('embedded-opentype'),
+        url('OptimusPrinceps.svg#OptimusPrinceps') format('svg'),
+        url('OptimusPrinceps.woff') format('woff'),
+        url('OptimusPrinceps.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+.header {
+    position: relative;
+    text-align: center;
+    color: white;
+
+}
+
+.Header {
+    background: #101010;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+img {
+
+    height: 150px;
+    margin-left: 200px;
+
+}
+
+.centered {
+    position: absolute;
+    top: 100px;
+    margin-left: 700px;
+    font-size: 70px;
+    transform: translate(-50%, -50%);
+}
+
+.centered::after {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white, white, white, rgba(255, 255, 255, 0));
+  content: "";
+  height: 0.0525em;
+  left: 0;
+  margin-top: calc(0.125em / 2 * -1);
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+h1{
+	font-family: "OptimusPrinceps";
+	color: white;
+    text-decoration: line-through;
+}
+
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#instructions {
+	background: url(https://i.pinimg.com/736x/82/61/b9/8261b9e64d7cf547c0bf3878a625b955--texture-generator-scale.jpg);
+	box-shadow: 25px 25px 50px 0 black inset, -25px -25px 50px 0 black inset; 
+	border-radius: 25px;
+	float: left;
+	border: 5px solid black;
+    padding: 40px 50px 50px 50px;
+    width: 600px;
+    margin-left: 40px;
+	font-family: 'Amita', cursive;
+	color: black;
+	font-size: 20px;
+    text-shadow:
+    0 0  5px #ffc,
+    0 0  10px yellow, 
+    0 0  15px #feff76, 
+    0 0  20px #fac74f, 
+    0 0  35px #f6512f, 
+    0 0  40px #f6512f, 
+    0 0  60px orangered, 
+    0 0  90px #f55034 
+}
+
+
+
+.instructions span { 
+  background-color: black;
+  color: #fff; 
+  display: inline;
+  padding: 0.5rem;
+  /* Needs prefixing */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+#guessingNumber {
+	height: 215px;
+    width: 220px;
+    margin-left: 40px;
+	margin-top: 5px;
+	background: url(https://i.pinimg.com/736x/0e/37/fe/0e37feef35d0585b47e1e070bb6c7412--seamless-textures-stone-walls.jpg);
+    border: 50px solid;
+    padding: 15px;
+    border-image: url(https://cdn.pixabay.com/photo/2016/10/23/10/18/frame-1762561_640.png) 100 stretch;
+    overflow-x: hidden;
+    position: absolute;
+    display: inline;
+	box-shadow: 25px 25px 50px 0 black inset, -25px -25px 50px 0 black inset; 
+	border-radius: 25px;
+}
+
+h2{
+	font-family: "OptimusPrinceps";
+	color: white;
+	font-size: 40px;
+    text-shadow:
+    0 0  5px #ffc,
+    0 0  10px yellow, 
+    0 0  15px #feff76, 
+    0 0  20px #fac74f, 
+    0 0  35px #f6512f, 
+    0 0  40px #f6512f, 
+    0 0  60px orangered, 
+    0 0  90px #f55034 
+}
+
+.value{
+	font-family: "OptimusPrinceps";
+	color: red;
+    padding-left: 80px;
+    margin-top: 100px;
+	font-weight: bold;
+	font-size: 50px;
+    text-shadow:
+    0 0  5px #ffc,
+    0 0  10px yellow, 
+    0 0  15px #feff76, 
+    0 0  20px #fac74f, 
+    0 0  35px #f6512f, 
+    0 0  40px #f6512f, 
+    0 0  60px orangered, 
+    0 0  90px #f55034 
+}
+
+
+#scoreboard {
+	background: url(https://i.pinimg.com/736x/0e/37/fe/0e37feef35d0585b47e1e070bb6c7412--seamless-textures-stone-walls.jpg);
+    height: 90px;
+    width: 370px;
+    display: inline-block;
+    position: absolute;
+    /* padding: 15px 20px 10px 15px; */
+    margin-top: 300px;
+    margin-left: 30px;
+    /* padding-left: 40px; */
+    /* padding: 10px; */
+    box-shadow: 5px 15px 40px 10px black;
+    border-radius: 15px;
+    line-height: 80%;
+    /* text-align: center; */
+
+}
+
+#crystals {
+	margin-bottom: 26px;
+    position: absolute;
+    margin-left: 200px;
+    margin-top: 410px;
+
+}
+
+.crystalImage {
+	height: 111px;
+	border: solid 1px #272525;
+	margin-left: 10px
+}
+
+.crystalImage:firstchild {
+	margin-left: 0px;
+
+}
+
+#totalScore {
+	margin-bottom: 50px;
+
+}
+
+#yts {
+	background: #009688;
+    float: left;
+    display: inline;
+    padding: 20px;
+    border: solid 1px #ddd;
+    position: relative;
+    margin-top: 420px;
+}
+
+h3{
+	font-family: "OptimusPrinceps";
+    color: white;
+    padding-left: 70px;
+    font-size: 23px;
+    text-shadow: 0 0 5px #ffc, 0 0 10px yellow, 0 0 15px #feff76, 0 0 20px #fac74f, 0 0 35px #f6512f, 0 0 40px #f6512f, 0 0 60px orangered, 0 0 90px #f55034; 
+}
+
+h3 span{
+	font-family: "OptimusPrinceps";
+	color: red;
+	font-weight: bold;
+	font-size: 24px;
+    text-shadow:
+    0 0  5px #ffc,
+    0 0  10px yellow, 
+    0 0  15px #feff76, 
+    0 0  20px #fac74f, 
+    0 0  35px #f6512f, 
+    0 0  40px #f6512f, 
+    0 0  60px orangered, 
+    0 0  90px #f55034 
+
+}
+
+h2 span {
+	font-family: "OptimusPrinceps";
+	color: red;
+	font-weight: bold;
+	font-size: 40px;
+    text-shadow:
+    0 0  5px #ffc,
+    0 0  10px yellow, 
+    0 0  15px #feff76, 
+    0 0  20px #fac74f, 
+    0 0  35px #f6512f, 
+    0 0  40px #f6512f, 
+    0 0  60px orangered, 
+    0 0  90px #f55034 
+
+
+}
+
+</style>
+
+
+ <!-- Java Script -->
+
+
+<script>
+$(document).ready(function() {
+
+	crystals = ['http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/chaos_gem.png','http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/dark_gem.png','http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/lightning_gem.png','http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/FireGem.png'];
+
+	var counter = 0;
+	var wins = 0;
+	var losses = 0;
+	$('#win').text(wins);
+	$('#loss').text(losses);
+	
+	newCrystals();
+	newGame();
+
+	function newCrystals () {
+		var numbers = []
+			while(numbers.length < 4){
+			  var randomnumber = Math.ceil(Math.random()*12)
+			  var found = false;
+			  for (var i=0; i< numbers.length; i++){
+				if (numbers[i] == randomnumber){
+					found = true; break
+				}
+			  }
+			  if(!found)numbers[numbers.length]=randomnumber;
+			}
+		console.log(numbers);		
+
+		for (i = 0; i < numbers.length; i++) {
+			var imageCrystal = $('<img>');
+			imageCrystal.attr('data-num', numbers[i]);
+			imageCrystal.attr('src', crystals[i]);
+			imageCrystal.attr('alt', 'crystals');
+			imageCrystal.addClass('crystalImage')
+			$('#crystals').append(imageCrystal);
+		}
+	}
+
+	function newGame() {
+
+		counter = 0;
+		$('#yourScore').text(counter);
+
+		function randomIntFromInterval(min,max){
+		   	return Math.floor(Math.random()*(max-min+1)+min);
+			}
+
+		var numberToGuess = randomIntFromInterval(19,120);
+
+		$('.value').text(numberToGuess);
+
+
+		$('.crystalImage').on('click', function(){
+		    counter = counter + parseInt($(this).data('num'));
+		   
+		    $('#yourScore').text(counter);
+
+		    if (counter == numberToGuess){
+		      $('#status').text('You won!!!!');
+		      wins ++;
+		      $('#win').text(wins);
+		      console.log(wins)
+		      $('#crystals').empty();
+		      newCrystals();
+		      newGame();
+		        
+		    } else if ( counter > numberToGuess){
+		        $('#status').text('You lost!')
+		        losses ++;
+		        $('#loss').text(losses);
+		        console.log(losses)
+		        $('#crystals').empty();
+		        newCrystals();
+		        newGame();
+		    }
+		});
+	}
+
+});
+
+
+
+</script>
+
+</body>
+</html>
